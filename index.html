@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minecraft Hub - Resource Packs, Shaders, Mods</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <!-- CSS Files -->
+    <title>MC Hub - Minecraft Mods, Resource Packs, Shaders</title>
     <link rel="stylesheet" href="css/common.css">
     <link rel="stylesheet" href="css/home.css">
     <link rel="stylesheet" href="css/category.css">
@@ -15,7 +13,7 @@
     <link rel="stylesheet" href="css/user.css">
 </head>
 <body>
-    <!-- ==================== BACKGROUND LAYER ==================== -->
+    <!-- ==================== BACKGROUND ==================== -->
     <div class="bg-layer">
         <div class="bg-orb orb1"></div>
         <div class="bg-orb orb2"></div>
@@ -29,18 +27,17 @@
         <div class="top-bar">
             <div class="logo-mini" onclick="navigateTo('home')">MC Hub</div>
             <div class="top-bar-right">
-                <button class="btn-top btn-support" onclick="alert('Discord: #community')">💬 Support</button>
+                <button class="btn-top btn-support" onclick="openSupportModal()">Support</button>
                 <button class="btn-top btn-add-home" onclick="openAddModal()">Add +</button>
-                <button class="btn-top btn-auth" id="authBtn" onclick="toggleAuth()">👤 Account</button>
+                <button class="btn-top btn-auth" id="authBtn" onclick="toggleAuth()">Account</button>
             </div>
         </div>
         <div class="home-content">
             <div class="hero-section">
-                <div class="hero-badge" onclick="navigateTo('tools')">⚡ Official Hub</div>
-                <h1 class="hero-title">First Minecraft Mod Reference!</h1>
-                <p class="hero-subtitle">Your Ultimate Modding Destination</p>
+                <div class="hero-badge" onclick="navigateTo('tools')">Official Hub</div>
+                <h1 class="hero-title">Minecraft Mod Reference</h1>
+                <p class="hero-subtitle">Resource Packs • Shaders • Mods</p>
             </div>
-            <!-- Statistics ROW - FIXED ALIGNMENT -->
             <div style="display:flex; gap: 30px; margin-bottom: 50px; justify-content: center;">
                 <div style="text-align:center;">
                     <span style="font-size:28px; font-weight:800;" id="totalMods">0</span><br>
@@ -74,13 +71,17 @@
                     <div class="card-label">Shaders</div>
                     <div class="card-count" id="shaderCount">0 items</div>
                 </div>
+            </div>
+        </div>
+    </div>
+
     <!-- ==================== MODS PAGE ==================== -->
     <div class="page" id="modsPage">
         <div class="top-bar">
             <div class="logo-mini" onclick="navigateTo('home')">MC Hub</div>
             <div class="top-bar-right">
-                <button class="btn-top btn-support">💬 Support</button>
-                <button class="btn-top btn-auth">👤 Account</button>
+                <button class="btn-top btn-support" onclick="openSupportModal()">Support</button>
+                <button class="btn-top btn-auth">Account</button>
             </div>
         </div>
         <div class="list-content">
@@ -106,7 +107,10 @@
     <div class="page" id="resourcePage">
         <div class="top-bar">
             <div class="logo-mini" onclick="navigateTo('home')">MC Hub</div>
-            <div class="top-bar-right">...</div>
+            <div class="top-bar-right">
+                <button class="btn-top btn-support" onclick="openSupportModal()">Support</button>
+                <button class="btn-top btn-auth">Account</button>
+            </div>
         </div>
         <div class="list-content">
             <div class="page-header">
@@ -129,7 +133,10 @@
     <div class="page" id="shaderPage">
         <div class="top-bar">
             <div class="logo-mini" onclick="navigateTo('home')">MC Hub</div>
-            <div class="top-bar-right">...</div>
+            <div class="top-bar-right">
+                <button class="btn-top btn-support" onclick="openSupportModal()">Support</button>
+                <button class="btn-top btn-auth">Account</button>
+            </div>
         </div>
         <div class="list-content">
             <div class="page-header">
@@ -149,8 +156,8 @@
         <div class="top-bar">
             <div class="logo-mini" onclick="navigateTo('home')">MC Hub</div>
             <div class="top-bar-right">
-                <button class="btn-top btn-support">💬 Support</button>
-                <button class="btn-top btn-auth">👤 Account</button>
+                <button class="btn-top btn-support" onclick="openSupportModal()">Support</button>
+                <button class="btn-top btn-auth">Account</button>
             </div>
         </div>
         <div class="detail-content">
@@ -183,44 +190,16 @@
         </div>
     </div>
 
-    <!-- ==================== PROFILE PAGE ==================== -->
-    <div class="page" id="profilePage">
-        <div class="top-bar">
-            <div class="logo-mini" onclick="navigateTo('home')">MC Hub</div>
-            <div class="top-bar-right">
-                <button class="btn-top btn-support" onclick="navigateTo('home')">🏠 Home</button>
-                <button class="btn-top btn-auth">👤 Account</button>
-            </div>
-        </div>
-        <div class="profile-content">
-            <div class="page-header">
-                <button class="back-btn" onclick="goBackFromDetail()">← Back</button>
-            </div>
-            <div class="profile-header">
-                <img id="profileAvatar" class="profile-avatar-large" src="" style="display:none;">
-                <div id="profileAvatarPlaceholder" class="profile-avatar-large">👤</div>
-                <div class="profile-info">
-                    <h2 class="profile-username" id="profileUsername"></h2>
-                    <p class="profile-bio" id="profileBio"></p>
-                    <button class="edit-profile-btn hidden" id="editProfileBtn" onclick="openEditProfile()">✏️ Edit Profile</button>
-                    <input type="file" id="avatarFileInput" accept="image/*" onchange="handleAvatarUpload(event)" style="display:none;">
-                </div>
-            </div>
-            <h3 style="margin-bottom:20px;">Uploaded Mods</h3>
-            <div class="mods-grid" id="userModsGrid"></div>
-        </div>
-    </div>
-
     <!-- ==================== TOOLS PAGE ==================== -->
     <div class="page" id="toolsPage">
         <div class="top-bar">
             <div class="logo-mini" onclick="navigateTo('home')">MC Hub</div>
             <div class="top-bar-right">
-                <button class="btn-top btn-support" onclick="navigateTo('home')">🏠 Home</button>
+                <button class="btn-top btn-support" onclick="openSupportModal()">Support</button>
             </div>
         </div>
         <div class="tools-content">
-            <h2>⚒️ Command Generator</h2>
+            <h2>Command Generator</h2>
             <div class="tool-card">
                 <div class="form-group"><label>Item</label><input id="toolItem" value="diamond_sword"></div>
                 <div class="form-group"><label>Enchantments</label><input id="toolEnch" value="sharpness 5, unbreaking 3"></div>
@@ -233,14 +212,44 @@
     <!-- ==================== AUTH MODAL ==================== -->
     <div class="modal-overlay" id="authModal">
         <div class="modal">
-            <h2>Login / Register</h2>
-            <div class="form-group"><label>Username</label><input id="authUser"></div>
-            <div class="form-group"><label>Password</label><input type="password" id="authPass"></div>
-            <div class="modal-actions">
-                <button class="btn-cancel" onclick="closeAuthModal()">Cancel</button>
-                <button class="btn-submit" onclick="login()">Login</button>
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchAuthTab('login')">Login</button>
+                <button class="auth-tab" onclick="switchAuthTab('signup')">Sign Up</button>
             </div>
-            <p style="margin-top:10px; font-size:13px; color:#aaa;">Demo: type any name to "log in".</p>
+            
+            <div id="loginForm">
+                <div class="form-group">
+                    <label>Email or Phone</label>
+                    <input type="text" id="loginIdentity" placeholder="example@mail.com or 09123456789">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" placeholder="Min 6 characters">
+                </div>
+                <button class="btn-submit" onclick="handleLogin()" style="width:100%;">Login</button>
+            </div>
+            
+            <div id="signupForm" class="hidden">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="signupUsername" placeholder="MinecraftFan123">
+                </div>
+                <div class="form-group">
+                    <label>Email or Phone</label>
+                    <input type="text" id="signupIdentity" placeholder="example@mail.com or 09123456789">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="signupPassword" placeholder="Min 6 characters">
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" id="signupPasswordConfirm" placeholder="Repeat password">
+                </div>
+                <button class="btn-submit" onclick="handleSignup()" style="width:100%;">Create Account</button>
+            </div>
+            
+            <button class="btn-cancel" onclick="closeAuthModal()" style="margin-top:15px; width:100%;">Cancel</button>
         </div>
     </div>
 
@@ -262,14 +271,25 @@
         </div>
     </div>
 
-    <!-- ==================== SCRIPTS ==================== -->
+    <!-- ==================== SUPPORT MODAL ==================== -->
+    <div class="modal-overlay" id="supportModal">
+        <div class="modal">
+            <h2>Support</h2>
+            <div class="form-group"><label>Your Name</label><input id="supportName"></div>
+            <div class="form-group"><label>Description</label><textarea id="supportDesc" rows="4"></textarea></div>
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeSupportModal()">Cancel</button>
+                <button class="btn-submit" onclick="sendSupport()">Send</button>
+            </div>
+        </div>
+    </div>
+
     <script src="js/common.js"></script>
     <script src="js/home.js"></script>
     <script src="js/category.js"></script>
     <script src="js/detail.js"></script>
     <script src="js/tools.js"></script>
     <script src="js/modals.js"></script>
-    <script src="js/user.js"></script>
     <script>
         window.addEventListener('DOMContentLoaded', () => {
             init();
