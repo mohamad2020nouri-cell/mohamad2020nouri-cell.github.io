@@ -1,0 +1,11 @@
+/* ============ TOOLS PAGE ============ */
+.tools-content { padding: 30px; }
+.tool-card {
+    background: rgba(20,16,40,0.7); backdrop-filter: blur(25px);
+    border: 1px solid rgba(120,80,255,0.12); border-radius: 20px;
+    padding: 25px; margin-bottom: 25px;
+}
+.tool-output {
+    background: #0b0a14; padding: 14px; border-radius: 10px; margin-top: 15px;
+    font-family: monospace; color: #64ffda; word-break: break-all;
+}
