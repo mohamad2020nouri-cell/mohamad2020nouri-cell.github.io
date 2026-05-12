@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Hub - Resource Packs, Shaders, Mods</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/category.css">
+    <link rel="stylesheet" href="css/detail.css">
+    <link rel="stylesheet" href="css/tools.css">
+    <link rel="stylesheet" href="css/modals.css">
+    <link rel="stylesheet" href="css/user.css">
+</head>
+<body>
+    <!-- ==================== BACKGROUND LAYER ==================== -->
+    <div class="bg-layer">
+        <div class="bg-orb orb1"></div>
+        <div class="bg-orb orb2"></div>
+        <div class="bg-orb orb3"></div>
+        <div class="grid-overlay"></div>
+        <div id="floatingParticles"></div>
+    </div>
+
+    <!-- ==================== HOME PAGE ==================== -->
+    <div class="page active" id="homePage">
+        <div class="top-bar">
+            <div class="logo-mini" onclick="navigateTo('home')">MC Hub</div>
+            <div class="top-bar-right">
+                <button class="btn-top btn-support" onclick="alert('Discord: #community')">💬 Support</button>
+                <button class="btn-top btn-add-home" onclick="openAddModal()">Add +</button>
+                <button class="btn-top btn-auth" id="authBtn" onclick="toggleAuth()">👤 Account</button>
+            </div>
+        </div>
+        <div class="home-content">
+            <div class="hero-section">
+                <div class="hero-badge" onclick="navigateTo('tools')">⚡ Official Hub</div>
+                <h1 class="hero-title">First Minecraft Mod Reference!</h1>
+                <p class="hero-subtitle">Your Ultimate Modding Destination</p>
+            </div>
+            <!-- Statistics ROW - FIXED ALIGNMENT -->
+            <div style="display:flex; gap: 30px; margin-bottom: 50px; justify-content: center;">
+                <div style="text-align:center;">
+                    <span style="font-size:28px; font-weight:800;" id="totalMods">0</span><br>
+                    <small>Mods</small>
+                </div>
+                <div style="text-align:center;">
+                    <span style="font-size:28px; font-weight:800;" id="totalResources">0</span><br>
+                    <small>Resource Packs</small>
+                </div>
+                <div style="text-align:center;">
+                    <span style="font-size:28px; font-weight:800;" id="totalShaders">0</span><br>
+                    <small>Shaders</small>
+                </div>
+            </div>
+            <div class="categories-row">
+                <div class="category-card" onclick="navigateTo('mods')" style="--card-color: rgba(255,100,60,0.35);">
+                    <div class="card-glow"></div>
+                    <div class="card-icon-wrap">⚙️</div>
+                    <div class="card-label">Mods</div>
+                    <div class="card-count" id="modCount">0 items</div>
+                </div>
+                <div class="category-card" onclick="navigateTo('resource')" style="--card-color: rgba(60,210,160,0.35);">
+                    <div class="card-glow"></div>
+                    <div class="card-icon-wrap">🎨</div>
+                    <div class="card-label">Resource Packs</div>
+                    <div class="card-count" id="resourceCount">0 items</div>
+                </div>
+                <div class="category-card" onclick="navigateTo('shader')" style="--card-color: rgba(160,100,255,0.35);">
+                    <div class="card-glow"></div>
+                    <div class="card-icon-wrap">✨</div>
+                    <div class="card-label">Shaders</div>
+                    <div class="card-count" id="shaderCount">0 items</div>
+                </div>
+            </div>
+            <div style="margin-top: 60px; width:100%; max-width: 700px;">
+                <h3 style="margin-bottom:15px;">🔥 Featured Servers</h3>
+                <div class="server-card" style="background:rgba(20,16,40,0.8); padding:15px; border-radius:14px; margin-bottom:10px; border:1px solid rgba(120,80,255,0.15);">
+                    <span>play.hypixel.net</span> <span style="color:#64ffda;">Online</span> <button onclick="copyIP('play.hypixel.net')" style="margin-left:auto; background:transparent; border:none; color:#b388ff; cursor:pointer;">📋 Copy</button>
+                </div>
+            </div>
+            <!-- Popular Creators -->
+            <div style="margin-top: 60px; width:100%; max-width: 700px;">
+                <h3 style="margin-bottom:15px;">⭐ Popular Creators</h3>
+                <div id="popularUsersContainer" style="display:flex; gap: 25px; justify-content: center; flex-wrap: wrap;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== MODS PAGE ==================== -->
+    <div class="page" id="modsPage">
+        <div class="top-bar">
+            <div class="logo-mini" onclick="navigateTo('home')">MC Hub</div>
+            <div class="top-bar-right">
+                <button class="btn-top btn-support">💬 Support</button>
+                <button class="btn-top btn-auth">👤 Account</button>
+            </div>
+        </div>
+        <div class="list-content">
+            <div class="page-header">
+                <button class="back-btn" onclick="navigateTo('home')">← Back</button>
+                <div class="search-bar">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" placeholder="Search mods..." oninput="filterCategory('mods')" id="modSearch">
+                </div>
+                <div style="display:flex; gap:10px;">
+                    <select id="modVersionFilter" onchange="filterCategory('mods')" style="background:rgba(8,8,22,0.8); color:#ccc; border:1px solid rgba(120,80,255,0.18); border-radius:10px; padding:10px;">
+                        <option value="">All Versions</option>
+                        <option value="1.20">1.20</option><option value="1.19">1.19</option><option value="1.18">1.18</option>
+                    </select>
+                    <button class="add-btn" onclick="openAddModal('mod')">Add +</button>
+                </div>
+            </div>
+            <div class="mods-grid" id="modsGrid"></div>
+        </div>
+    </div>
+
+    <!-- ==================== RESOURCE PACKS PAGE ==================== -->
+    <div class="page" id="resourcePage">
+        <div class="top-bar">
+            <div class="logo-mini" onclick="navigateTo('home')">MC Hub</div>
+            <div class="top-bar-right">...</div>
+        </div>
+        <div class="list-content">
+            <div class="page-header">
+                <button class="back-btn" onclick="navigateTo('home')">← Back</button>
+                <div class="search-bar">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" placeholder="Search resource packs..." oninput="filterCategory('resources')" id="resourceSearch">
+                </div>
+                <select id="resourceResolutionFilter" onchange="filterCategory('resources')" style="background:rgba(8,8,22,0.8); color:#ccc; border:1px solid rgba(120,80,255,0.18); border-radius:10px; padding:10px;">
+                    <option value="">All Resolutions</option>
+                    <option value="16x">16x</option><option value="32x">32x</option><option value="64x">64x</option>
+                </select>
+                <button class="add-btn" onclick="openAddModal('resource')">Add +</button>
+            </div>
+            <div class="mods-grid" id="resourceGrid"></div>
+        </div>
+    </div>
+
+    <!-- ==================== SHADERS PAGE ==================== -->
+    <div class="page" id="shaderPage">
+        <div class="top-bar">
+            <div class="logo-mini" onclick="navigateTo('home')">MC Hub</div>
+            <div class="top-bar-right">...</div>
+        </div>
+        <div class="list-content">
+            <div class="page-header">
+                <button class="back-btn" onclick="navigateTo('home')">← Back</button>
+                <div class="search-bar">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" placeholder="Search shaders..." oninput="filterCategory('shaders')" id="shaderSearch">
+                </div>
+                <button class="add-btn" onclick="openAddModal('shader')">Add +</button>
+            </div>
+            <div class="mods-grid" id="shaderGrid"></div>
+        </div>
+    </div>
+
+    <!-- ==================== DETAIL PAGE ==================== -->
+    <div class="page" id="detailPage">
+        <div class="top-bar">
+            <div class="logo-mini" onclick="navigateTo('home')">MC Hub</div>
+            <div class="top-bar-right">
+                <button class="btn-top btn-support">💬 Support</button>
+                <button class="btn-top btn-auth">👤 Account</button>
+            </div>
+        </div>
+        <div class="detail-content">
+            <div class="page-header">
+                <button class="back-btn" onclick="goBackFromDetail()">← Back</button>
+            </div>
+            <div class="detail-images" id="detailImages"></div>
+            <div class="detail-info">
+                <h2 class="detail-title" id="detailTitle"></h2>
+                <p class="detail-desc" id="detailDesc"></p>
+                <div class="rating-section" id="ratingSection"></div>
+                <div class="detail-meta">
+                    <div class="meta-item"><span class="meta-label">Creator</span><span class="meta-value" id="detailAuthor"></span></div>
+                    <div class="meta-item"><span class="meta-label">Type</span><span class="meta-value" id="detailType"></span></div>
+                    <div class="meta-item"><span class="meta-label">Version</span><span class="meta-value" id="detailVersion"></span></div>
+                    <div class="meta-item"><span class="meta-label">Added</span><span class="meta-value" id="detailDate"></span></div>
+                </div>
+                <button class="download-timer" id="downloadBtn" onclick="startDownload()">Download (Wait 5s)</button>
+                <span id="downloadTimerText" style="color:#aaa; margin-left:15px;"></span>
+                <div class="comments-section">
+                    <h3>Comments</h3>
+                    <div id="commentList" class="comment-list"></div>
+                    <div class="comment-form">
+                        <textarea id="commentInput" placeholder="Write a comment..."></textarea>
+                        <button class="btn-submit" onclick="addComment()">Post</button>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top:30px;"><h3>Related Items</h3><div class="mods-grid" id="relatedGrid"></div></div>
+        </div>
+    </div>
+
+    <!-- ==================== PROFILE PAGE ==================== -->
+    <div class="page" id="profilePage">
+        <div class="top-bar">
+            <div class="logo-mini" onclick="navigateTo('home')">MC Hub</div>
+            <div class="top-bar-right">
+                <button class="btn-top btn-support" onclick="navigateTo('home')">🏠 Home</button>
+                <button class="btn-top btn-auth">👤 Account</button>
+            </div>
+        </div>
+        <div class="profile-content">
+            <div class="page-header">
+                <button class="back-btn" onclick="goBackFromDetail()">← Back</button>
+            </div>
+            <div class="profile-header">
+                <img id="profileAvatar" class="profile-avatar-large" src="" style="display:none;">
+                <div id="profileAvatarPlaceholder" class="profile-avatar-large">👤</div>
+                <div class="profile-info">
+                    <h2 class="profile-username" id="profileUsername"></h2>
+                    <p class="profile-bio" id="profileBio"></p>
+                    <button class="edit-profile-btn hidden" id="editProfileBtn" onclick="openEditProfile()">✏️ Edit Profile</button>
+                    <input type="file" id="avatarFileInput" accept="image/*" onchange="handleAvatarUpload(event)" style="display:none;">
+                </div>
+            </div>
+            <h3 style="margin-bottom:20px;">Uploaded Mods</h3>
+            <div class="mods-grid" id="userModsGrid"></div>
+        </div>
+    </div>
+
+    <!-- ==================== TOOLS PAGE ==================== -->
+    <div class="page" id="toolsPage">
+        <div class="top-bar">
+            <div class="logo-mini" onclick="navigateTo('home')">MC Hub</div>
+            <div class="top-bar-right">
+                <button class="btn-top btn-support" onclick="navigateTo('home')">🏠 Home</button>
+            </div>
+        </div>
+        <div class="tools-content">
+            <h2>⚒️ Command Generator</h2>
+            <div class="tool-card">
+                <div class="form-group"><label>Item</label><input id="toolItem" value="diamond_sword"></div>
+                <div class="form-group"><label>Enchantments</label><input id="toolEnch" value="sharpness 5, unbreaking 3"></div>
+                <button class="btn-submit" onclick="generateCommand()">Generate</button>
+                <div class="tool-output" id="toolOutput"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== AUTH MODAL ==================== -->
+    <div class="modal-overlay" id="authModal">
+        <div class="modal">
+            <h2>Login / Register</h2>
+            <div class="form-group"><label>Username</label><input id="authUser"></div>
+            <div class="form-group"><label>Password</label><input type="password" id="authPass"></div>
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeAuthModal()">Cancel</button>
+                <button class="btn-submit" onclick="login()">Login</button>
+            </div>
+            <p style="margin-top:10px; font-size:13px; color:#aaa;">Demo: type any name to "log in".</p>
+        </div>
+    </div>
+
+    <!-- ==================== ADD MODAL ==================== -->
+    <div class="modal-overlay" id="addModal">
+        <div class="modal">
+            <h2>Add New Item</h2>
+            <div class="form-group"><label>Type</label><select id="addType"><option value="mod">Mod</option><option value="resource">Resource Pack</option><option value="shader">Shader</option></select></div>
+            <div class="form-group"><label>Name</label><input id="addName"></div>
+            <div class="form-group"><label>Description</label><textarea id="addDesc"></textarea></div>
+            <div class="form-group"><label>Image URL</label><input id="addImage"></div>
+            <div class="form-group"><label>File (simulated)</label><input type="file" id="addFile" accept=".zip,.jar,.rar"></div>
+            <div class="form-group"><label>Author</label><input id="addAuthor"></div>
+            <div class="form-group"><label>Version</label><input id="addVersion" value="1.20.4"></div>
+            <div class="modal-actions">
+                <button class="btn-cancel" onclick="closeAddModal()">Cancel</button>
+                <button class="btn-submit" onclick="addItem()">Upload</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SCRIPTS ==================== -->
+    <script src="js/common.js"></script>
+    <script src="js/home.js"></script>
+    <script src="js/category.js"></script>
+    <script src="js/detail.js"></script>
+    <script src="js/tools.js"></script>
+    <script src="js/modals.js"></script>
+    <script src="js/user.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            init();
+        });
+    </script>
+</body>
+</html>
